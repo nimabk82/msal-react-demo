@@ -18,7 +18,7 @@ export const SignOutButton = () => {
   //   };
 
   const handleSignOut = () => {
-    instance.logout({
+    instance.logoutRedirect({
       onRedirectNavigate: () => {
         // Return false to stop navigation after local logout
         return false;
