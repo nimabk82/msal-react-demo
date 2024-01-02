@@ -18,18 +18,15 @@ export const SignOutButton = () => {
   //   };
 
   const handleSignOut = () => {
-    instance.logoutRedirect({
-      onRedirectNavigate: () => {
-        // Return false to stop navigation after local logout
-        return false;
-      },
-    });
-    //     instance.logoutRedirect({
-    //       onRedirectNavigate: () => {
-    //         // Return false to stop navigation after local logout
-    //         return false;
-    //       },
-    //     });
+    instance
+      .logoutRedirect
+      //{
+      //   onRedirectNavigate: () => {
+      //     // Return false to stop navigation after local logout
+      //     return false;
+      //   },
+      // }
+      ();
   };
 
   return (
