@@ -16,7 +16,7 @@ const pca = new PublicClientApplication({
     authority:
       "https://login.microsoftonline.com/bf475492-067f-4d6e-989f-776b97a19cd9",
     redirectUri: "/",
-    postLogoutRedirectUri: "/",
+    postLogoutRedirectUri: "/logout",
     clientCapabilities: ["CP1"],
   },
   cache: {
@@ -24,6 +24,7 @@ const pca = new PublicClientApplication({
     storeAuthStateInCookie: false,
   },
   system: {
+    allowRedirectInIframe: true,
     loggerOptions: {
       loggerCallback: (level, message, containsPII) => {
         console.log(message);
