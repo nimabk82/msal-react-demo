@@ -21,9 +21,10 @@ function App({ msalInstance }) {
 }
 
 const Pages = () => {
-  const { instance } = useMsal();
+  const { instance, accounts } = useMsal();
   const isAuthenticated = useIsAuthenticated();
 
+  console.log(accounts, "accounts");
   useEffect(() => {
     if (!isAuthenticated) {
       instance
