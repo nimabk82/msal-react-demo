@@ -1,11 +1,18 @@
+import { Link } from "react-router-dom";
 
 export const DeeplinkButton = () => {
 
 
   return (
-    <p>
-    <a href="https://purple-water-0475ec410.4.azurestaticapps.net//profile"
-    >Open Deep link to app</a>
-    </p>
+    <div style={{marginTop:40}}>
+    <div>
+    <Link to="/profile" >/profile</Link>
+    </div>
+       <div>
+    <Link to="/profile/nima" >/profile/nima</Link></div>
+    <div>
+    <Link to="/test/nima" >/test/nima</Link>
+    </div>
+    </div>
   );
 };

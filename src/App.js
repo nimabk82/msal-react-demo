@@ -37,7 +37,7 @@ const Pages = () => {
         })
         .catch((error) => {
           if (error instanceof InteractionRequiredAuthError) {
-            instance.loginRedirect();
+            // instance.loginRedirect();
           }
         });
     }
