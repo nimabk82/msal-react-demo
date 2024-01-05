@@ -19,6 +19,7 @@ export const DeeplinkButton = () => {
     <Button color="inherit" onClick={() => launchAppOnAndroidDevice(`${URL2}/test/nima111`)}>
      Deep link to "hhttps://msal-react-demo.vercel.app/test/nima111"
     </Button>
+    <a href={`${URL1}/test/nima111`} >aaaaaaaa</a>
         </div>
     </div>
   )
