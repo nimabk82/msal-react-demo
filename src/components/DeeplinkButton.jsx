@@ -1,3 +1,4 @@
+import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 
 export const DeeplinkButton = () => {
@@ -16,7 +17,9 @@ export const DeeplinkButton = () => {
        <div>
     <Link to="https://purple-water-0475ec410.4.azurestaticapps.net/test/nima" >https://purple-water-0475ec410.4.azurestaticapps.net/test/nima</Link></div>
        <div>
-       <button onclick={launchAppOnAndroidDevice}>Open App</button>
+       <Button color="inherit" onClick={launchAppOnAndroidDevice}>
+      Sign in
+    </Button>
         </div>
     </div>
   )
