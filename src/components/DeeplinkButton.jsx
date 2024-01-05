@@ -4,7 +4,7 @@ export const DeeplinkButton = () => {
 
 
   function launchAppOnAndroidDevice() {
-    const url = "https://purple-water-0475ec410.4.azurestaticapps.net/test/nima#Intent;scheme=https;package=com.msalrn;end";
+    const url = "https://purple-water-0475ec410.4.azurestaticapps.net/test/nima11111111";
     window.location.replace(url);
  }
 
@@ -14,6 +14,8 @@ export const DeeplinkButton = () => {
        <Button color="inherit" onClick={launchAppOnAndroidDevice}>
      Deep link to "https://purple-water-0475ec410.4.azurestaticapps.net/test/nima"
     </Button>
+
+    <a href="https://purple-water-0475ec410.4.azurestaticapps.net/test/nima11111111">asdasda</a>
         </div>
     </div>
   )
