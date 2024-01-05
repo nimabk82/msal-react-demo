@@ -6,13 +6,10 @@ export const DeeplinkButton = () => {
   return (
     <div style={{marginTop:40}}>
     <div>
-    <Link to="/profile" >/profile</Link>
+    <Link to="https://purple-water-0475ec410.4.azurestaticapps.net/test" >https://purple-water-0475ec410.4.azurestaticapps.net/test</Link>
     </div>
        <div>
-    <Link to="/profile/nima" >/profile/nima</Link></div>
-    <div>
-    <Link to="/test/nima" >/test/nima</Link>
-    </div>
+    <Link to="https://purple-water-0475ec410.4.azurestaticapps.net/test/nima" >https://purple-water-0475ec410.4.azurestaticapps.net/test/nima</Link></div>
     </div>
   );
 };
