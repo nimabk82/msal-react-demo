@@ -1,17 +1,11 @@
-// import Button from "@mui/material/Button";
+import Button from "@mui/material/Button";
 
 const URL1 = 'https://purple-water-0475ec410.4.azurestaticapps.net'
-const URL2 = 'https://msal-react-demo.vercel.app'
+// const URL2 = 'https://msal-react-demo.vercel.app'
 export const DeeplinkButton = () => {
 
 
-//   function launchAppOnAndroidDevice(e , url,newtab) {
-//     e.preventDefault();
-//     window.location.replace(url);
-//  }
-
-
- function launchAppOnAndroidDevice1(e , url,newtab) {
+ function launchAppOnAndroidDevice(e , url) {
   e.preventDefault();
   window.open(url)
 }
@@ -19,7 +13,18 @@ export const DeeplinkButton = () => {
 
   return (
     <div style={{marginTop:40}}>
-      <td onClick={()=> window.open(`${URL2}/test/nima111`, "_blank")}>text1</td>
+       <Button color="inherit" onClick={(e) => launchAppOnAndroidDevice(e , `${URL1}/test/nima`)} >
+     Deep link to /test/nima
+    </Button>
+
+    <Button color="inherit" onClick={(e) => launchAppOnAndroidDevice(e , `${URL1}`)} >
+     Deep link to app
+    </Button>
+
+    <Button color="inherit" onClick={() => window.location.assign(`${URL1}/test/nima`)} >
+     Deep link to /test/nima
+    </Button>
+      {/* <td onClick={()=> window.open(`${URL2}/test/nima111`, "_blank")}>text1</td>
       <td onClick={(e)=> launchAppOnAndroidDevice1(e,`${URL2}/test/nima111`)}>text2</td>
       <td onClick={(e)=> launchAppOnAndroidDevice1(e,`${URL2}`)}>text3</td>
       <td onClick={()=> window.open(`${URL2}/test/nima111`)}>text4</td>
@@ -29,7 +34,7 @@ export const DeeplinkButton = () => {
       <td onClick={()=> window.open(`${URL1}/test/nima111`, "_blank")}>text1</td>
       <td onClick={(e)=> launchAppOnAndroidDevice1(e,`${URL1}/test/nima111`)}>text2</td>
 
-       <div>
+       <div> */}
        {/* <Button color="inherit" onClick={(e) => launchAppOnAndroidDevice(e , `${URL1}/test/nima111`)} >
      Deep link to 1
     </Button>
@@ -48,7 +53,7 @@ export const DeeplinkButton = () => {
 
 
     {/* <a href={`${URL1}/test/nima111`} target="_blank" >aaaaaaaa</a> */}
-        </div>
+        {/* </div> */}
     </div>
   )
 };
