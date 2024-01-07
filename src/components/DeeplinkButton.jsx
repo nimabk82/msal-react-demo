@@ -21,7 +21,9 @@ export const DeeplinkButton = () => {
     <div style={{marginTop:40}}>
       <td onClick={()=> window.open(`${URL2}/test/nima111`, "_blank")}>text1</td>
       <td onClick={(e)=> launchAppOnAndroidDevice1(e,`${URL2}/test/nima111`)}>text2</td>
-      <td onClick={()=> window.open(`${URL2}/test/nima111`)}>text3</td>
+      <td onClick={(e)=> launchAppOnAndroidDevice1(e,`${URL2}`)}>text3</td>
+      <td onClick={()=> window.open(`${URL2}/test/nima111`)}>text4</td>
+      <td onClick={()=>  window.location.replace(`${URL2}/test/nima111`)}>text5</td>
 
 
       <td onClick={()=> window.open(`${URL1}/test/nima111`, "_blank")}>text1</td>
