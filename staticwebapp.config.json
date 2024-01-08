@@ -5,5 +5,12 @@
   },
   "mimeTypes": {
     ".json": "application/json"
-  }
+  },
+  "routes": [
+    {
+      "route": "/*",
+      "serve": "/index.html",
+      "statusCode": 200
+    }
+  ]
 }
