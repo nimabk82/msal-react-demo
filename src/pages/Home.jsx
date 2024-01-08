@@ -5,7 +5,6 @@ import { DeeplinkButton } from "../components/DeeplinkButton";
 export const Home = () => {
     return (
         <>
-         <DeeplinkButton/>
             <AuthenticatedTemplate>
                 <Typography variant="h6">You are signed-in. app1</Typography>
                 <DeeplinkButton/>

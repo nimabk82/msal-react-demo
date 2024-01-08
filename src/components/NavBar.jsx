@@ -18,7 +18,7 @@ const NavBar = () => {
             <AppBar position="static">
                 <Toolbar>
                     <Typography sx={{ flexGrow: 1 }}>
-                        <Link component={RouterLink} to="/" color="inherit" variant="h6">Microsoft identity platform</Link>
+                        <Link component={RouterLink} to="/" color="inherit" variant="h6">App 1</Link>
                     </Typography>
                     {isAuthenticated ? <WelcomeName /> : null}
                     <Button component={RouterLink} to="/profile" color="inherit">Profile</Button>
