@@ -26,8 +26,7 @@ export const DeeplinkButton = () => {
   const rows = [
     createData('url1', `${URL1}/test/nima`,false),
     createData('url2', `${ process.env.NODE_ENV === 'development' ? URL2 : URL3}/test/nima` ,false),
-    createData('url3', `${URL1}/test/nima`,true),
-    createData('url4', `${ process.env.NODE_ENV === 'development' ? URL2 : URL3}/test?username=nima` ,true),
+    createData('url3', `${ process.env.NODE_ENV === 'development' ? URL2 : URL3}/test?username=nima` ,true),
   ];
   
 
