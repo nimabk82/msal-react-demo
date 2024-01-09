@@ -24,9 +24,13 @@ const Pages = () => {
   const { instance, accounts } = useMsal();
   const isAuthenticated = useIsAuthenticated();
 
-  console.log(accounts, "accounts");
+  console.log(accounts, instance, "accounts1");
   useEffect(() => {
+    console.log("accounts2");
+
     if (!isAuthenticated && accounts.length > 0) {
+      console.log("accounts3");
+
       // Attempt SSO silently
       instance
         .ssoSilent({
@@ -34,15 +38,22 @@ const Pages = () => {
           loginHint: accounts[0].username, // Provide a hint for the user's account
         })
         .then((response) => {
+          console.log("accounts4", response);
+
           instance.setActiveAccount(response.account);
         })
         .catch((error) => {
+          console.log("accounts5", error);
+
           if (error instanceof InteractionRequiredAuthError) {
+            console.log("accounts6", error);
+
             // Fallback to interactive sign-in if silent SSO fails
             instance.loginRedirect({
               scopes: ["user.read"],
             });
           } else {
+            console.log("accounts7", error);
             console.error("SSO Silent Error:", error);
           }
         });
