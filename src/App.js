@@ -28,14 +28,15 @@ const Pages = () => {
   useEffect(() => {
     console.log("accounts2");
 
-    if (!isAuthenticated && accounts.length > 0) {
+    // if (!isAuthenticated && accounts.length > 0) {
+    if (!isAuthenticated) {
       console.log("accounts3");
 
       // Attempt SSO silently
       instance
         .ssoSilent({
           scopes: ["user.read"],
-          loginHint: accounts[0].username, // Provide a hint for the user's account
+          // loginHint: accounts[0].username, // Provide a hint for the user's account
         })
         .then((response) => {
           console.log("accounts4", response);
