@@ -26,23 +26,28 @@ const Pages = () => {
 
   console.log(accounts, "accounts");
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!isAuthenticated && accounts.length > 0) {
+      // Attempt SSO silently
       instance
         .ssoSilent({
           scopes: ["user.read"],
-          //   loginHint: "nbokaei1982@hotmail.com",
+          loginHint: accounts[0].username, // Provide a hint for the user's account
         })
         .then((response) => {
           instance.setActiveAccount(response.account);
         })
         .catch((error) => {
           if (error instanceof InteractionRequiredAuthError) {
-            instance.loginRedirect();
+            // Fallback to interactive sign-in if silent SSO fails
+            instance.loginRedirect({
+              scopes: ["user.read"],
+            });
+          } else {
+            console.error("SSO Silent Error:", error);
           }
         });
     }
-    // eslint-disable-next-line
-  }, []);
+  }, [instance, isAuthenticated, accounts]);
 
   return (
     <Routes>

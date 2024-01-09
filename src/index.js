@@ -21,7 +21,7 @@ const pca = new PublicClientApplication({
   },
   cache: {
     cacheLocation: "localStorage",
-    storeAuthStateInCookie: false,
+    storeAuthStateInCookie: true,
   },
   system: {
     allowRedirectInIframe: true,
