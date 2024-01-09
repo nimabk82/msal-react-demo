@@ -1,5 +1,5 @@
 import Button from "@mui/material/Button";
-import { useMsal } from "@azure/msal-react";
+import { useMsal} from "@azure/msal-react";
 
 export const SignOutButton = () => {
   const { instance } = useMsal();
@@ -17,16 +17,14 @@ export const SignOutButton = () => {
   //     });
   //   };
 
-  const handleSignOut = () => {
+  const handleSignOut = async () => {
+    const logoutRequest = {
+      account: instance.getActiveAccount(),
+postLogoutRedirectUri: "https://purple-water-0475ec410.4.azurestaticapps.net/logout"}
+console.log(logoutRequest);
+
     instance
-      .logoutRedirect
-      //{
-      //   onRedirectNavigate: () => {
-      //     // Return false to stop navigation after local logout
-      //     return false;
-      //   },
-      // }
-      ();
+      .logoutRedirect(logoutRequest)
   };
 
   return (
