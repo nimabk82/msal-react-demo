@@ -4,9 +4,12 @@ import { InteractionType, BrowserAuthError } from "@azure/msal-browser";
 import { useState, useEffect } from "react";
 import { fetchData } from "../fetch";
 
+// const scope = `authorize`;
+const scope = "user.read";
+
 export const Profile = () => {
     const { result, error, login } = useMsalAuthentication(InteractionType.Popup, {
-        scopes: ["user.read"],
+        scopes: [scope],
         claims: sessionStorage.getItem('claimsChallenge') 
             ? window.atob(sessionStorage.getItem('claimsChallenge')) : undefined
     });
@@ -21,7 +24,7 @@ export const Profile = () => {
         if (!!error) {
             if (error instanceof BrowserAuthError) {
                 login(InteractionType.Redirect, {
-                    scopes: ["user.read"]
+                    scopes: [scope]
                 })
             }
             console.log(error);

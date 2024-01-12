@@ -8,7 +8,11 @@ import { BrowserRouter } from "react-router-dom";
 
 import App from "./App";
 
-import { PublicClientApplication, EventType } from "@azure/msal-browser";
+import {
+  PublicClientApplication,
+  EventType,
+  LogLevel,
+} from "@azure/msal-browser";
 
 const pca = new PublicClientApplication({
   auth: {
@@ -26,10 +30,27 @@ const pca = new PublicClientApplication({
   system: {
     allowRedirectInIframe: true,
     loggerOptions: {
-      loggerCallback: (level, message, containsPII) => {
-        console.log(message);
+      loggerCallback: (level, message, containsPii) => {
+        if (containsPii) {
+          return;
+        }
+        switch (level) {
+          case LogLevel.Error:
+            console.error(message, "loggerCallback Error");
+            return;
+          case LogLevel.Info:
+            console.info(message, "loggerCallback Info");
+            return;
+          case LogLevel.Verbose:
+            console.debug(message, "loggerCallback Verbose");
+            return;
+          case LogLevel.Warning:
+            console.warn(message, "loggerCallback Warning");
+            return;
+          default:
+            return;
+        }
       },
-      logLevel: "Verbose",
     },
   },
 });
