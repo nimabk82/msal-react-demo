@@ -5,11 +5,11 @@ export const PageLayout = (props) => {
     return (
         <>
             <NavBar />
-            <br />
             <Typography variant="h5">
                 <center>Welcome to the Microsoft Authentication Library For React Quickstart</center>
             </Typography>
-            <br />
+            <br/>
+            <br/>
             {props.children}
         </>
     );

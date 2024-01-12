@@ -1,18 +1,28 @@
-import Typography from "@mui/material/Typography";
 import { AuthenticatedTemplate, UnauthenticatedTemplate } from "@azure/msal-react";
-import { DeeplinkButton } from "../components/DeeplinkButton";
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import Typography from "@mui/material/Typography";
+import { Link as RouterLink } from "react-router-dom";
+import { DeeplinkButton } from "../ui-components/DeeplinkButton";
 
-export const Home = () => {
-    return (
-        <>
-            <AuthenticatedTemplate>
-                <Typography variant="h6">You are signed-in. app1</Typography>
-                <DeeplinkButton/>
-            </AuthenticatedTemplate>
-            <UnauthenticatedTemplate>
-                <Typography variant="h6">Please sign-in to see your profile information.</Typography>
-            </UnauthenticatedTemplate>
-           
-        </>
-    );
+export function Home() {
+  return (
+      <>
+          <AuthenticatedTemplate>
+            <ButtonGroup orientation="vertical">
+              <Button component={RouterLink} to="/profile" variant="contained" color="primary">Request Profile Information</Button>
+              <Button component={RouterLink} to="/profileUseMsalAuthenticationHook" variant="contained" color="primary">Request Access Token (using useMsalAuthentication hook)</Button>
+              <Button component={RouterLink} to="/profileWithMsal" variant="contained" color="primary">Request Profile Information (using withMsal HOC)</Button>
+              <Button component={RouterLink} to="/profileRawContext" variant="contained" color="primary">Request Profile Information (using raw context)</Button>
+              <DeeplinkButton/>
+            </ButtonGroup>
+          </AuthenticatedTemplate>
+
+          <UnauthenticatedTemplate>
+            <Typography variant="h6">
+              <center>Please sign-in to see your profile information.</center>
+            </Typography>
+          </UnauthenticatedTemplate>
+      </>
+  );
 }

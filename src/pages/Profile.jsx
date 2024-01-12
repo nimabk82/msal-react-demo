@@ -1,50 +1,56 @@
-import { ProfileData } from "../components/ProfileData";
-import { useMsalAuthentication } from "@azure/msal-react";
-import { InteractionType, BrowserAuthError } from "@azure/msal-browser";
-import { useState, useEffect } from "react";
-import { fetchData } from "../fetch";
+import { useEffect, useState } from "react";
 
-// const scope = `authorize`;
-const scope = "user.read";
+// Msal imports
+import { MsalAuthenticationTemplate, useMsal } from "@azure/msal-react";
+import { InteractionStatus, InteractionType, InteractionRequiredAuthError } from "@azure/msal-browser";
+import { loginRequest } from "../authConfig";
 
-export const Profile = () => {
-    const { result, error, login } = useMsalAuthentication(InteractionType.Popup, {
-        scopes: [scope],
-        claims: sessionStorage.getItem('claimsChallenge') 
-            ? window.atob(sessionStorage.getItem('claimsChallenge')) : undefined
-    });
+// Sample app imports
+import { ProfileData } from "../ui-components/ProfileData";
+import { Loading } from "../ui-components/Loading";
+import { ErrorComponent } from "../ui-components/ErrorComponent";
+import { callMsGraph } from "../utils/MsGraphApiCall";
 
+// Material-ui imports
+import Paper from "@mui/material/Paper";
+
+const ProfileContent = () => {
+    const { instance, inProgress } = useMsal();
     const [graphData, setGraphData] = useState(null);
 
     useEffect(() => {
-        if (!!graphData) {
-            return
+        if (!graphData && inProgress === InteractionStatus.None) {
+            callMsGraph().then(response => setGraphData(response)).catch((e) => {
+                if (e instanceof InteractionRequiredAuthError) {
+                    instance.acquireTokenRedirect({
+                        ...loginRequest,
+                        account: instance.getActiveAccount()
+                    });
+                }
+            });
         }
+    }, [inProgress, graphData, instance]);
+  
+    return (
+        <Paper>
+            { graphData ? <ProfileData graphData={graphData} /> : null }
+        </Paper>
+    );
+};
 
-        if (!!error) {
-            if (error instanceof BrowserAuthError) {
-                login(InteractionType.Redirect, {
-                    scopes: [scope]
-                })
-            }
-            console.log(error);
-        }
-
-        if (result) {
-            fetchData("https://graph.microsoft.com/v1.0/me", result.accessToken)
-                .then(data => setGraphData(data))
-                .catch(error => console.log(error));
-        }
-    }, [error, result, graphData, login]);
-
-
-    if (error) {
-        return <div>Error: {error.message}</div>;
-    }
+export function Profile() {
+    const authRequest = {
+        ...loginRequest
+    };
 
     return (
-        <>
-            {graphData ? <ProfileData graphData={graphData} /> : null}
-        </>
-    )
-}
+        <MsalAuthenticationTemplate 
+            interactionType={InteractionType.Popup} 
+            authenticationRequest={authRequest} 
+            errorComponent={ErrorComponent} 
+            loadingComponent={Loading}
+        >
+            <ProfileContent />
+        </MsalAuthenticationTemplate>
+      )
+};

@@ -1,74 +1,41 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "./styles/theme";
+import App from './App';
 
-import { BrowserRouter } from "react-router-dom";
+// MSAL imports
+import { PublicClientApplication, EventType } from "@azure/msal-browser";
+import { msalConfig } from "./authConfig";
 
-import App from "./App";
+export const msalInstance = new PublicClientApplication(msalConfig);
 
-import {
-  PublicClientApplication,
-  EventType,
-  LogLevel,
-} from "@azure/msal-browser";
-
-const pca = new PublicClientApplication({
-  auth: {
-    clientId: "d5a97498-a9f0-4007-9f4a-d16592145e79",
-    authority:
-      "https://login.microsoftonline.com/bf475492-067f-4d6e-989f-776b97a19cd9",
-    redirectUri: "/",
-    postLogoutRedirectUri: "/logout",
-    clientCapabilities: ["CP1"],
-  },
-  cache: {
-    cacheLocation: "localStorage",
-    storeAuthStateInCookie: true,
-  },
-  system: {
-    allowRedirectInIframe: true,
-    loggerOptions: {
-      loggerCallback: (level, message, containsPii) => {
-        if (containsPii) {
-          return;
-        }
-        switch (level) {
-          case LogLevel.Error:
-            console.error(message, "loggerCallback Error");
-            return;
-          case LogLevel.Info:
-            console.info(message, "loggerCallback Info");
-            return;
-          case LogLevel.Verbose:
-            console.debug(message, "loggerCallback Verbose");
-            return;
-          case LogLevel.Warning:
-            console.warn(message, "loggerCallback Warning");
-            return;
-          default:
-            return;
-        }
-      },
-    },
-  },
-});
-
-pca.addEventCallback((event) => {
-  if (event.eventType === EventType.LOGIN_SUCCESS) {
-    pca.setActiveAccount(event.payload.account);
+msalInstance.initialize().then(() => {
+  // Default to using the first account if no account is active on page load
+  if (!msalInstance.getActiveAccount() && msalInstance.getAllAccounts().length > 0) {
+    // Account selection logic is app dependent. Adjust as needed for different use cases.
+    msalInstance.setActiveAccount(msalInstance.getAllAccounts()[0]);
   }
-});
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+  // Optional - This will update account state if a user signs in from another tab or window
+  msalInstance.enableAccountStorageEvents();
 
-root.render(
-  <React.StrictMode>
-    <BrowserRouter>
+  msalInstance.addEventCallback((event) => {
+    if (event.eventType === EventType.LOGIN_SUCCESS && event.payload.account) {
+      const account = event.payload.account;
+      msalInstance.setActiveAccount(account);
+    }
+  });
+
+  const container = document.getElementById("root");
+  const root = ReactDOM.createRoot(container);
+
+  root.render(
+    <Router>
       <ThemeProvider theme={theme}>
-        <App msalInstance={pca} />
+        <App pca={msalInstance} />
       </ThemeProvider>
-    </BrowserRouter>
-  </React.StrictMode>
-);
+    </Router>
+  );
+});
