@@ -6,7 +6,7 @@ export const PageLayout = (props) => {
         <>
             <NavBar />
             <Typography variant="h5">
-                <center>Welcome to the Microsoft Authentication Library For React Quickstart</center>
+                <center>Welcome to APP 1</center>
             </Typography>
             <br/>
             <br/>
