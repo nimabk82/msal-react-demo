@@ -7,6 +7,7 @@ import { MsalProvider, useIsAuthenticated, useMsal } from "@azure/msal-react";
 import { InteractionRequiredAuthError } from "@azure/msal-browser";
 import Grid from "@mui/material/Grid";
 import { Logout } from "./pages/Logout";
+import { ClientDetails } from "./components/ClientDetails";
 
 function App({ msalInstance }) {
   return (
@@ -66,6 +67,10 @@ const Pages = () => {
       <Route path="/" element={<Home />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/logout" element={<Logout />} />
+      <Route
+        path="/clientDetails/isDeeplinking/:isDeeplinking/clientId/:clientId/dob/:dob/firstName/:firstName/lastName/:lastName"
+        element={<ClientDetails />}
+      />
     </Routes>
   );
 };
