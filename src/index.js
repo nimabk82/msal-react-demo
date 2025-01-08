@@ -1,31 +1,26 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "./styles/theme";
-
 import { BrowserRouter } from "react-router-dom";
-
 import App from "./App";
-
+import { MsalProvider } from "@azure/msal-react";
 import {
-  PublicClientApplication,
   EventType,
   LogLevel,
+  PublicClientApplication,
 } from "@azure/msal-browser";
 
-const pca = new PublicClientApplication({
+export const msalConfig = {
   auth: {
-    clientId: "d5a97498-a9f0-4007-9f4a-d16592145e79",
+    clientId: "a777c7c4-09f2-4cf9-9605-96b82323b611",
     authority:
       "https://login.microsoftonline.com/bf475492-067f-4d6e-989f-776b97a19cd9",
-    redirectUri: "/",
-    postLogoutRedirectUri: "/logout",
-    clientCapabilities: ["CP1"],
+    redirectUri: "http://localhost:3002",
   },
   cache: {
-    cacheLocation: "localStorage",
-    storeAuthStateInCookie: true,
+    cacheLocation: "sessionStorage", // Store tokens in session storage
+    storeAuthStateInCookie: false,
   },
   system: {
     allowRedirectInIframe: true,
@@ -53,22 +48,21 @@ const pca = new PublicClientApplication({
       },
     },
   },
-});
+};
 
-pca.addEventCallback((event) => {
-  if (event.eventType === EventType.LOGIN_SUCCESS) {
-    pca.setActiveAccount(event.payload.account);
-  }
-});
+export const scopes = ["openid", "profile", "email", "user.read"];
+
+export const msalInstance = new PublicClientApplication(msalConfig);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <App msalInstance={pca} />
-      </ThemeProvider>
-    </BrowserRouter>
+    <MsalProvider instance={msalInstance}>
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
+      </BrowserRouter>
+    </MsalProvider>
   </React.StrictMode>
 );
